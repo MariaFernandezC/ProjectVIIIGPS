@@ -2,12 +2,14 @@ package com.projectviiigps;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,10 +20,23 @@ import org.json.JSONObject;
 
 public class RegistroHijo extends AppCompatActivity {
 
+private EditText idpadre1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro_hijo);
+
+
+
+
+
+      //  Intent i =getIntent();
+       // final int id = i.getExtras().getInt("idpadre");
+      //  idpadre1.setText(Integer.toString(id));
+
+        final EditText idpadre1           = findViewById(R.id.RegistroCodigop);
         final EditText nombre              = findViewById(R.id.RegistroNombresH);
         final EditText apellido           = findViewById(R.id.RegistroApellidosH);
         final EditText edad               = findViewById(R.id.RegistroEdadH);
@@ -37,14 +52,17 @@ public class RegistroHijo extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
+                Intent i =getIntent();
+                final int id = i.getExtras().getInt("idpadre");
+                idpadre1.setText(Integer.toString(id));
+                int    idpadre         =  Integer.parseInt( idpadre1.getText().toString());
                 String nombreh       = nombre.getText().toString();
                 String apellidoh       = apellido.getText().toString();
                 int    edadh         =  Integer.parseInt( edad.getText().toString());
                 String direccionh    = direccion.getText().toString();
-                String tiposangre    = tiposangreh.getText().toString();;
-                String enfermedad    = enfermedadh.getText().toString();;
-                String alergia    = alergiah.getText().toString();;
-
+                String tiposangre    = tiposangreh.getText().toString();
+                String enfermedad    = enfermedadh.getText().toString();
+                String alergia    = alergiah.getText().toString();
 
 
                 Response.Listener <String> respuesta=new Response.Listener<String>() {
@@ -73,7 +91,7 @@ public class RegistroHijo extends AppCompatActivity {
                         }
                     }
                 };
-                RegistroHijoRequest r = new RegistroHijoRequest(nombreh,apellidoh,edadh,direccionh,tiposangre, enfermedad, alergia, respuesta);
+                RegistroHijoRequest r = new RegistroHijoRequest(idpadre,nombreh,apellidoh,edadh,direccionh,tiposangre, enfermedad, alergia, respuesta);
                 RequestQueue cola = Volley.newRequestQueue( RegistroHijo.this);
                 cola.add(r);
             }

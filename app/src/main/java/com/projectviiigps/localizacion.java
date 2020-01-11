@@ -83,7 +83,7 @@ public class localizacion extends AppCompatActivity implements OnMapReadyCallbac
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         jsonObject = response.getJSONObject(i);
-                        edtnombre.setText(jsonObject.getString("nombrenino"));
+                        edtnombre.setText(jsonObject.getString("nombreh"));
                         edtlatitud.setText(jsonObject.getString("latitud"));
                         edtlongitud.setText(jsonObject.getString("longitud"));
                         Double latitud = Double.parseDouble(edtlatitud.getText().toString());

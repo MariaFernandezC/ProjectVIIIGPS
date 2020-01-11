@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,26 +20,36 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class Bienvenido extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     DrawerLayout drawerLayout;
     NavigationView navView;
     ConstraintLayout expandableView;
     Button arrowBtn;
     CardView cardView;
+    private TextView  codigo ;
+    Intent intent =getIntent();
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bienvenido);
+
         expandableView = findViewById(R.id.expandableView);
         arrowBtn = findViewById(R.id.arrowBtn);
         cardView = findViewById(R.id.cardView);
@@ -69,6 +80,7 @@ public class Bienvenido extends AppCompatActivity implements NavigationView.OnNa
                 startActivity(i);
             }
         });
+
 
         arrowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +117,7 @@ public class Bienvenido extends AppCompatActivity implements NavigationView.OnNa
         final TextView direccion1 =(TextView)findViewById(R.id.direccion);
         final TextView telefono1 =(TextView)findViewById(R.id.phoneNumber);
         final TextView correo1 =(TextView)findViewById(R.id.mailNumber);
+        codigo =(TextView)findViewById(R.id.codigopadre);//esto
 
 
         String nombre = i.getStringExtra("nombre");
@@ -112,11 +125,17 @@ public class Bienvenido extends AppCompatActivity implements NavigationView.OnNa
         String direccion = i.getStringExtra("direccion");
         int telefono = i.getIntExtra("telefono", -1);
         String correo = i.getStringExtra("correo");
+        int idpadre=i.getIntExtra("idpadre",-1);//esto
+
 
         mensaje.setText(mensaje.getText()+"  " + nombre +"" + apellido + " ");
         direccion1.setText(direccion1.getText()+"  " + direccion);
         telefono1.setText(telefono1.getText()+" "+ telefono);
         correo1.setText(correo1.getText()+" "+ correo);
+        codigo.setText(codigo.getText()+" "+ idpadre);         //esto
+
+       // i.putExtra("idpadre",idpadre);
+        // startActivity(i);
 
 
     }
@@ -131,18 +150,34 @@ public class Bienvenido extends AppCompatActivity implements NavigationView.OnNa
              Intent i = new Intent(Bienvenido.this,Perfil.class);
              startActivity(i);
         } else if (id == R.id.menu_seccion_2) {
+
              Intent i = new Intent(Bienvenido.this,RegistroHijo.class);
+             int idpadre=i.getIntExtra("idpadre",-1);//esto
+             i.putExtra("idpadre",idpadre);
              startActivity(i);
+
         } else if (id == R.id.menu_seccion_3) {
             Intent i = new Intent(Bienvenido.this,localizacion.class);
             startActivity(i);
         } else if (id == R.id.menu_seccion_4) {
-        Intent i = new Intent(Bienvenido.this,Reportes.class);
-        startActivity(i);
+            Intent i = new Intent(Bienvenido.this,Reportes.class);
+            startActivity(i);
     }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
 }
+
+private void lanzarcodigo ()
+{
+    Intent intent = new Intent(this,RegistroHijo.class);
+    intent.putExtra("idpadre",codigo.getText());
+    startActivity(intent);
+}
+
+
+
+
+
 }

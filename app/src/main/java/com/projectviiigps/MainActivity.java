@@ -67,19 +67,25 @@ public class MainActivity extends AppCompatActivity {
 
                             if ( ok==true ){
 
+
+                                int idpadre1 = jsonRespuesta.getInt("idpadre");//esto
                                 String nombre = jsonRespuesta.getString("nombre");
                                 String apellido = jsonRespuesta.getString("apellido");
                                 String direccion = jsonRespuesta.getString("direccion");
                                 int telefono = jsonRespuesta.getInt("telefono");
                                 String correo = jsonRespuesta.getString("correo");
 
+
                                 //int edad =jsonRespuesta.getInt("edad");
                                 Intent bienvenido = new Intent( MainActivity.this, Bienvenido.class);
+
+                                bienvenido.putExtra("idpadre",idpadre1);//esto
                                 bienvenido.putExtra("nombre",nombre);
                                 bienvenido.putExtra("apellido",apellido);
                                 bienvenido.putExtra("direccion",direccion);
                                 bienvenido.putExtra("telefono",telefono);
                                 bienvenido.putExtra("correo",correo);
+                                bienvenido.putExtra("idpadre",idpadre1);
                                 MainActivity.this.startActivity(bienvenido);
                                 MainActivity.this.finish();
 
